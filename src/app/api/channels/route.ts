@@ -21,6 +21,23 @@ export const POST = async (req: Request) => {
                 status: 400,
             });
 
+        // Check if a channel with the same name and type already exists
+        const existingChannel = await db.channel.findFirst({
+            where: {
+                serverId: serverId,
+                name: name,
+                type: type,
+            },
+        });
+
+        console.log(existingChannel);
+
+        if (existingChannel)
+            return new NextResponse(
+                `Channel witn name: ${existingChannel.name} ane type: ${existingChannel.type} already exists`,
+                { status: 400 }
+            );
+
         const server = await db.server.update({
             where: {
                 id: serverId,
