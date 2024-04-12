@@ -26,7 +26,6 @@ export const POST = async (req: Request) => {
             where: {
                 serverId: serverId,
                 name: name,
-                type: type,
             },
         });
 
@@ -34,7 +33,7 @@ export const POST = async (req: Request) => {
 
         if (existingChannel)
             return new NextResponse(
-                `Channel witn name: ${existingChannel.name} ane type: ${existingChannel.type} already exists`,
+                `Channel witn name: ${existingChannel.name} already exists`,
                 { status: 400 }
             );
 
