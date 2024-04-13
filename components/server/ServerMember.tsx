@@ -27,6 +27,11 @@ const ServerMember = ({ member, server }: ServerMemberProps) => {
 
     return (
         <button
+            onClick={() => {
+                router.push(
+                    `/servers/${params?.serverId}/conversations/${member.id}`
+                );
+            }}
             className={cn(
                 "group p-2 rounded-md flex items-center gap-2 w-full  hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
                 params?.memberId === member.id &&
