@@ -39,7 +39,7 @@ const ServerChannel = ({ channel, server, role }: ServerChannelProps) => {
 
             <p
                 className={cn(
-                    "line-clamp-1 fonr-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300",
+                    "line-clamp-1 fonr-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 text-left",
                     params?.channelId === channel.id &&
                         "text-primary dark:text-zinc-200 dark:group-hover:text-white"
                 )}
@@ -50,7 +50,12 @@ const ServerChannel = ({ channel, server, role }: ServerChannelProps) => {
             {channel.name !== "general" && role !== MemberRole.GUEST && (
                 <div className="ml-auto flex items-center gap-2">
                     <ActionTootip label="Edit">
-                        <Edit className="h-4 w-4 hidden group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300" />
+                        <Edit
+                            onClick={() => {
+                                onOpen("editChannel", { server, channel });
+                            }}
+                            className="h-4 w-4 hidden group-hover:block text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300"
+                        />
                     </ActionTootip>
 
                     <ActionTootip label="Delete">
