@@ -1,5 +1,5 @@
 import { ChannelType } from "@prisma/client";
-import { Hash, Menu, Mic, Video } from "lucide-react";
+import { Hash, Mic, Video } from "lucide-react";
 import MobileToggle from "../MobileToggle";
 import UserAvatar from "../UserAvatar";
 import SocketIndicator from "../SocketIndicator";

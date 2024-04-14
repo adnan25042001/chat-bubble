@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import { Channel, ChannelType, MemberRole, Server } from "@prisma/client";
 import { Edit, Hash, Lock, Mic, Trash, Video } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import ActionTootip from "../ActionTootip";
 import { ModalType, useModalStore } from "@/hooks/useModalStore";
+import ActionTootip from "../ActionTootip";
 
 interface ServerChannelProps {
     channel: Channel;
