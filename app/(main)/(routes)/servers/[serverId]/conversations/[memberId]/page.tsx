@@ -1,4 +1,5 @@
 import ChatHeader from "@/components/chat/ChatHeader";
+import ChatInput from "@/components/chat/ChatInput";
 import { getOrCreateConversation } from "@/lib/conversation";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
@@ -50,6 +51,18 @@ const MemberIdPage = async ({ params }: MemberIdPageProps) => {
                 imageUrl={otherMember.profile.imageUrl}
                 type="conversation"
             />
+
+            <div className="flex-1">Future Messages</div>
+
+            {/* <ChatInput
+                apiUrl="/api/socket/messages"
+                name={channel.name}
+                type="channel"
+                query={{
+                    channelId: channel.id,
+                    serverId: channel.serverId,
+                }}
+            /> */}
         </div>
     );
 };
