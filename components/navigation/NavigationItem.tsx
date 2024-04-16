@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import ActionTootip from "../ActionTootip";
+import ActionTooltip from "../ActionTooltip";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -20,7 +20,7 @@ const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
     };
 
     return (
-        <ActionTootip side="right" align="center" label={name}>
+        <ActionTooltip side="right" align="center" label={name}>
             <button
                 onClick={onClick}
                 className="group relative flex items-center"
@@ -43,7 +43,7 @@ const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
                     <Image fill src={imageUrl} alt="Channel" />
                 </div>
             </button>
-        </ActionTootip>
+        </ActionTooltip>
     );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import ActionTootip from "../ActionTootip";
+import ActionTooltip from "../ActionTooltip";
 import { useModalStore } from "@/hooks/useModalStore";
 
 const NavigationAction = () => {
@@ -9,7 +9,7 @@ const NavigationAction = () => {
 
     return (
         <div>
-            <ActionTootip side="right" align="center" label="Add a server">
+            <ActionTooltip side="right" align="center" label="Add a server">
                 <button
                     className="group flex items-center justify-center"
                     onClick={() => onOpen("createServer")}
@@ -21,7 +21,7 @@ const NavigationAction = () => {
                         />
                     </div>
                 </button>
-            </ActionTootip>
+            </ActionTooltip>
         </div>
     );
 };

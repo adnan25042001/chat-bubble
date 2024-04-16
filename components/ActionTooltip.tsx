@@ -14,7 +14,7 @@ interface ActionTooltipProps {
     align?: "start" | "center" | "end";
 }
 
-const ActionTootip = ({ label, children, side, align }: ActionTooltipProps) => {
+const ActionTooltip = ({ label, children, side, align }: ActionTooltipProps) => {
     return (
         <TooltipProvider>
             <Tooltip delayDuration={50}>
@@ -30,4 +30,4 @@ const ActionTootip = ({ label, children, side, align }: ActionTooltipProps) => {
     );
 };
 
-export default ActionTootip;
+export default ActionTooltip;
