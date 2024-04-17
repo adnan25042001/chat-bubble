@@ -106,6 +106,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponseServerIo) => {
             if (!isMessageOwner)
                 return res.status(401).json({ error: "Unauthorized" });
 
+            if (message.content === content)
+                return res.status(200).json(message);
+
             message = await db.message.update({
                 where: {
                     id: messageId as string,

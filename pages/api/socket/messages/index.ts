@@ -12,8 +12,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponseServerIo) => {
         const { content, fileUrl } = req.body;
         const { serverId, channelId } = req.query;
 
-        console.log("Hello");
-
         const profile = await currentProfilePages(req);
 
         if (!profile) return res.status(401).json({ error: "Unauthorized" });
