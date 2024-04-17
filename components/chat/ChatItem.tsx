@@ -12,7 +12,10 @@ import axios from "axios";
 import qs from "query-string";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormField, FormItem } from "../ui/form";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { useModalStore } from "@/hooks/useModalStore";
 
 interface ChatItemProps {
     id: string;
@@ -52,7 +55,19 @@ const ChatItem = ({
     timestamp,
 }: ChatItemProps) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
+    const { onOpen } = useModalStore();
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape" || event.keyCode === 27) {
+                setIsEditing(false);
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, []);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -67,7 +82,23 @@ const ChatItem = ({
         });
     }, [content]);
 
-    const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {};
+    const isLoading = form.formState.isSubmitting;
+
+    const handleOnSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const url = qs.stringifyUrl({
+                url: `${socketUrl}/${id}`,
+                query: socketQuery,
+            });
+
+            await axios.patch(url, values);
+
+            form.reset();
+            setIsEditing(false);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const fileType = fileUrl?.split(".").pop();
 
@@ -159,12 +190,37 @@ const ChatItem = ({
                                 onSubmit={form.handleSubmit(handleOnSubmit)}
                                 className="flex items-center w-full gap-x-2 pt-2"
                             >
-                                <FormField control={form.control} name="content" render={({field}) => (
-                                    <FormItem className="flex-1">
-                                        
-                                    </FormItem>
-                                )} />
+                                <FormField
+                                    control={form.control}
+                                    name="content"
+                                    render={({ field }) => (
+                                        <FormItem className="flex-1">
+                                            <FormControl>
+                                                <div className="relative w-full">
+                                                    <Input
+                                                        {...field}
+                                                        disabled={isLoading}
+                                                        placeholder="Edited message"
+                                                        className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                                                    />
+                                                </div>
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <Button
+                                    disabled={isLoading}
+                                    size="sm"
+                                    variant="primary"
+                                >
+                                    Save
+                                </Button>
                             </form>
+
+                            <span className="text-[10px] mt-1 text-zinc-400">
+                                Press escape to cancel, enter to save
+                            </span>
                         </Form>
                     )}
                 </div>
@@ -182,7 +238,15 @@ const ChatItem = ({
                     )}
 
                     <ActionTooltip label="Delete">
-                        <Trash className="h-4 w-4 cursor-pointer ml-auto text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition" />
+                        <Trash
+                            onClick={() =>
+                                onOpen("deleteMessage", {
+                                    apiUrl: `${socketUrl}/${id}`,
+                                    query: socketQuery,
+                                })
+                            }
+                            className="h-4 w-4 cursor-pointer ml-auto text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
+                        />
                     </ActionTooltip>
                 </div>
             )}

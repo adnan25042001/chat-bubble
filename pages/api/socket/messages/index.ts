@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponseServerIo) => {
 
         const profile = await currentProfilePages(req);
 
-        if (!profile) return res.status(404).json({ error: "Unauthorized" });
+        if (!profile) return res.status(401).json({ error: "Unauthorized" });
 
         if (!serverId)
             return res.status(400).json({ error: "Server ID missing" });
