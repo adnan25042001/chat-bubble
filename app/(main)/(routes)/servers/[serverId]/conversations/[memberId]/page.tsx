@@ -1,10 +1,10 @@
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatInput from "@/components/chat/ChatInput";
+import ChatMessages from "@/components/chat/ChatMessages";
 import { getOrCreateConversation } from "@/lib/conversation";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
-import { ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 interface MemberIdPageProps {
@@ -52,17 +52,28 @@ const MemberIdPage = async ({ params }: MemberIdPageProps) => {
                 type="conversation"
             />
 
-            <div className="flex-1">Future Messages</div>
-
-            {/* <ChatInput
-                apiUrl="/api/socket/messages"
-                name={channel.name}
-                type="channel"
-                query={{
-                    channelId: channel.id,
-                    serverId: channel.serverId,
+            <ChatMessages
+                member={currentMember}
+                name={otherMember.profile.name}
+                chatId={conversation.id}
+                type="conversation"
+                apiUrl="/api/direct-messages"
+                paramKey="conversationId"
+                paramValue={conversation.id}
+                socketUrl="/api/socket/direct-messages"
+                socketQuery={{
+                    conversationId: conversation.id,
                 }}
-            /> */}
+            />
+
+            <ChatInput
+                apiUrl="/api/socket/direct-messages"
+                name={otherMember.profile.name}
+                type="conversation"
+                query={{
+                    conversationId: conversation.id,
+                }}
+            />
         </div>
     );
 };

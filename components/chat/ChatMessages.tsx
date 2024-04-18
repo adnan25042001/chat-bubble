@@ -8,7 +8,6 @@ import { Loader2, ServerCrash } from "lucide-react";
 import ChatItem from "./ChatItem";
 import { Fragment, useRef } from "react";
 import { useChatSocket } from "@/hooks/useChatSocket";
-import { ScrollArea } from "../ui/scroll-area";
 import { useChatScroll } from "@/hooks/useChatScroll";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
@@ -84,7 +83,7 @@ const ChatMessages = ({
     }
 
     return (
-        <ScrollArea
+        <div
             ref={chatRef}
             className="flex-1 flex flex-col py-4 overflow-y-auto"
         >
@@ -137,7 +136,7 @@ const ChatMessages = ({
             </div>
 
             <div ref={bottomRef} />
-        </ScrollArea>
+        </div>
     );
 };
 
